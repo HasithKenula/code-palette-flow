@@ -138,70 +138,170 @@ function Nav({ theme, setTheme, menuOpen, setMenuOpen }: any) {
 }
 
 function Hero({ role }: { role: string }) {
+  const badges = [
+    { label: "React", icon: Code2, pos: "top-4 -left-4 sm:-left-10", delay: "0s" },
+    { label: "Node.js", icon: Layers, pos: "top-1/3 -right-4 sm:-right-12", delay: "1.2s" },
+    { label: "Figma", icon: Palette, pos: "bottom-24 -left-6 sm:-left-14", delay: "2.4s" },
+    { label: "Java", icon: Database, pos: "bottom-6 right-2 sm:-right-8", delay: "0.6s" },
+  ];
   return (
-    <section id="top" className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
-      {/* Floating gradient blobs */}
+    <section id="top" className="relative overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-24">
+      {/* Background: grid + gradient blobs + radial glow */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-20 -left-20 w-[420px] h-[420px] rounded-full bg-primary/25 blur-3xl animate-float-blob" />
-        <div className="absolute top-40 -right-20 w-[380px] h-[380px] rounded-full bg-primary/20 blur-3xl animate-float-blob" style={{ animationDelay: "3s" }} />
+        <div
+          className="absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "linear-gradient(var(--foreground) 1px, transparent 1px), linear-gradient(90deg, var(--foreground) 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
+            maskImage: "radial-gradient(ellipse at 50% 30%, black 40%, transparent 75%)",
+          }}
+        />
+        <div className="absolute -top-32 -left-24 w-[480px] h-[480px] rounded-full bg-primary/25 blur-3xl animate-float-blob" />
+        <div className="absolute top-1/3 -right-24 w-[440px] h-[440px] rounded-full bg-primary/20 blur-3xl animate-float-blob" style={{ animationDelay: "3s" }} />
         <div className="absolute inset-0" style={{ background: "var(--gradient-radial)" }} />
       </div>
 
-      <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs text-muted-foreground mb-6 animate-fade-up">
-          <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          Available for internships & collaborations
-        </div>
-
-        <div className="animate-fade-up" style={{ animationDelay: "0.05s" }}>
-          <p className="font-display text-primary text-sm sm:text-base mb-3 tracking-wide">Hello, I'm</p>
-          <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
-            A.A.D. Hasith <span className="text-primary">Kenula</span>
-            <br />
-            Premarathna
-          </h1>
-        </div>
-
-        <div className="mt-6 flex flex-col items-center gap-5 animate-fade-up" style={{ animationDelay: "0.15s" }}>
-          <div className="relative">
-            <div className="absolute inset-0 rounded-full bg-primary/40 blur-2xl" />
-            <img
-              src={profileImg}
-              alt="Hasith Kenula Premarathna"
-              width={140}
-              height={140}
-              className="relative h-32 w-32 sm:h-36 sm:w-36 rounded-full object-cover ring-4 ring-primary/40 ring-offset-4 ring-offset-background"
-            />
-          </div>
-          <h2 className="text-lg sm:text-xl text-muted-foreground">
-            Aspiring <span className="text-foreground font-medium caret">{role}</span>
-          </h2>
-          <p className="max-w-2xl text-muted-foreground">
-            Passionate about building modern web applications and innovative digital solutions.
-            Undergraduate IT student at <span className="text-foreground">SLIIT</span> (2023–2027), exploring software engineering, full-stack systems and UI/UX design.
-          </p>
-        </div>
-
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3 animate-fade-up" style={{ animationDelay: "0.25s" }}>
-          <a href="#projects" className="group inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:opacity-90 transition glow">
-            View Projects <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition" />
-          </a>
-          <a href="#contact" className="inline-flex items-center gap-2 rounded-full glass px-6 py-3 text-sm font-semibold hover:bg-secondary transition">
-            Contact Me
-          </a>
-        </div>
-
-        <div className="mt-12 grid grid-cols-3 max-w-xl mx-auto gap-3 animate-fade-up" style={{ animationDelay: "0.35s" }}>
-          {[
-            { k: "5+", v: "Projects" },
-            { k: "3+", v: "Tech Stacks" },
-            { k: "2027", v: "Graduation" },
-          ].map((s) => (
-            <div key={s.v} className="glass rounded-2xl px-4 py-3">
-              <div className="font-display text-xl sm:text-2xl text-primary font-bold">{s.k}</div>
-              <div className="text-xs text-muted-foreground">{s.v}</div>
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+          {/* LEFT — copy */}
+          <div className="lg:col-span-7 order-2 lg:order-1 text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs text-muted-foreground mb-6 animate-fade-up">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-75 animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+              </span>
+              Available for internships & collaborations
             </div>
-          ))}
+
+            <div className="animate-fade-up" style={{ animationDelay: "0.05s" }}>
+              <p className="font-display text-primary text-sm sm:text-base mb-3 tracking-wide">Hello, I'm</p>
+              <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.02]">
+                Hasith{" "}
+                <span className="relative inline-block">
+                  <span className="relative z-10 text-primary-foreground px-3 py-0.5 rounded-2xl bg-primary inline-block -rotate-2">
+                    Kenula
+                  </span>
+                </span>
+                <br />
+                Premarathna<span className="text-primary">.</span>
+              </h1>
+            </div>
+
+            <h2 className="mt-5 text-lg sm:text-2xl text-muted-foreground animate-fade-up" style={{ animationDelay: "0.15s" }}>
+              Aspiring <span className="text-foreground font-semibold caret">{role}</span>
+            </h2>
+
+            <p className="mt-5 max-w-xl mx-auto lg:mx-0 text-muted-foreground animate-fade-up" style={{ animationDelay: "0.2s" }}>
+              Passionate about crafting modern web applications and innovative digital solutions.
+              Undergraduate IT student at <span className="text-foreground font-medium">SLIIT</span> (2023–2027) —
+              exploring software engineering, full-stack systems and UI/UX design.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3 animate-fade-up" style={{ animationDelay: "0.25s" }}>
+              <a href="#projects" className="group inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:opacity-90 transition glow">
+                View Projects <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a href="#contact" className="inline-flex items-center gap-2 rounded-full glass px-6 py-3 text-sm font-semibold hover:bg-secondary transition">
+                Contact Me
+              </a>
+              <div className="flex items-center gap-1.5 ml-1">
+                {[
+                  { Ico: Github, href: "https://github.com" },
+                  { Ico: Linkedin, href: "https://linkedin.com" },
+                  { Ico: Instagram, href: "https://instagram.com" },
+                ].map(({ Ico, href }, i) => (
+                  <a key={i} href={href} target="_blank" rel="noreferrer" className="h-10 w-10 grid place-items-center rounded-full glass hover:bg-primary hover:text-primary-foreground transition">
+                    <Ico className="h-4 w-4" />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-10 grid grid-cols-3 max-w-md mx-auto lg:mx-0 gap-3 animate-fade-up" style={{ animationDelay: "0.35s" }}>
+              {[
+                { k: "5+", v: "Projects shipped" },
+                { k: "8+", v: "Technologies" },
+                { k: "2027", v: "Graduation" },
+              ].map((s) => (
+                <div key={s.v} className="glass rounded-2xl px-4 py-3">
+                  <div className="font-display text-xl sm:text-2xl text-primary font-bold">{s.k}</div>
+                  <div className="text-[11px] text-muted-foreground leading-tight mt-0.5">{s.v}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* RIGHT — portrait with floating tech badges */}
+          <div className="lg:col-span-5 order-1 lg:order-2 relative animate-fade-up" style={{ animationDelay: "0.1s" }}>
+            <div className="relative mx-auto w-[280px] sm:w-[360px] lg:w-full max-w-md aspect-[4/5]">
+              {/* glow */}
+              <div className="absolute inset-6 rounded-[2.5rem] bg-primary/40 blur-3xl" />
+              {/* dotted ring decoration */}
+              <div className="absolute -inset-3 rounded-[3rem] border border-dashed border-primary/40 animate-[spin_30s_linear_infinite]" />
+              {/* portrait card */}
+              <div className="relative h-full w-full rounded-[2.5rem] overflow-hidden glass p-2">
+                <img
+                  src={profileImg}
+                  alt="Hasith Kenula Premarathna — Software Engineer & UI/UX Designer"
+                  width={832}
+                  height={1024}
+                  className="h-full w-full object-cover rounded-[2rem]"
+                />
+                {/* bottom gradient + name chip */}
+                <div className="absolute inset-x-2 bottom-2 rounded-b-[2rem] p-4 bg-gradient-to-t from-background via-background/80 to-transparent">
+                  <div className="glass rounded-2xl px-3 py-2 flex items-center gap-2 w-fit">
+                    <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+                    <span className="text-xs">Currently building <span className="text-foreground font-semibold">RentXpress</span></span>
+                  </div>
+                </div>
+              </div>
+
+              {/* floating badges */}
+              {badges.map((b) => (
+                <div
+                  key={b.label}
+                  className={`absolute ${b.pos} glass rounded-2xl px-3 py-2 flex items-center gap-2 shadow-lg animate-float-blob`}
+                  style={{ animationDelay: b.delay, animationDuration: "6s" }}
+                >
+                  <span className="h-7 w-7 rounded-lg bg-primary/15 text-primary grid place-items-center">
+                    <b.icon className="h-3.5 w-3.5" />
+                  </span>
+                  <span className="text-xs font-medium">{b.label}</span>
+                </div>
+              ))}
+
+              {/* corner stat card */}
+              <div className="absolute -bottom-4 -right-2 sm:-right-6 glass rounded-2xl px-4 py-3 flex items-center gap-3 shadow-xl">
+                <div className="flex -space-x-2">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="h-7 w-7 rounded-full bg-primary border-2 border-background" style={{ opacity: 1 - i * 0.2 }} />
+                  ))}
+                </div>
+                <div>
+                  <div className="text-xs font-semibold">Open to work</div>
+                  <div className="text-[10px] text-muted-foreground">Internships · Freelance</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Marquee tech strip */}
+        <div className="mt-16 sm:mt-20 relative overflow-hidden glass rounded-2xl py-4">
+          <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
+          <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
+          <div className="flex gap-12 animate-[marquee_25s_linear_infinite] whitespace-nowrap">
+            {[...Array(2)].map((_, dup) => (
+              <div key={dup} className="flex gap-12 shrink-0">
+                {["React", "Node.js", "TypeScript", "MongoDB", "Java", "Spring Boot", "Figma", "MySQL", "Express", "Tailwind"].map((t) => (
+                  <span key={t} className="text-sm text-muted-foreground font-display tracking-wide hover:text-primary transition">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
