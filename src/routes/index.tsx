@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, useMemo } from "react";
+import emailjs from "@emailjs/browser";
 import {
   Github, Linkedin, Facebook, Instagram, Mail, Phone, ArrowRight, ArrowUpRight,
   Code2, Palette, Layout, Layers, Database, Wrench, GraduationCap,
-  Sun, Moon, Menu, X, Sparkles, CheckCircle2, Send,
+  Sun, Moon, Menu, X, Sparkles, CheckCircle2, Send, Loader2,
 } from "lucide-react";
 import profileAsset from "@/assets/profile.png.asset.json";
 const profileImg = profileAsset.url;
@@ -644,21 +645,36 @@ function Experience() {
 }
 
 function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({ from_name: "", reply_to: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const submit = (e: React.FormEvent) => {
+  useEffect(() => {
+    emailjs.init("EDcyXeixPsTfW1UWW");
+  }, []);
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errs: Record<string, string> = {};
-    if (!form.name.trim()) errs.name = "Please enter your name";
-    if (!/^\S+@\S+\.\S+$/.test(form.email)) errs.email = "Enter a valid email";
+    if (!form.from_name.trim()) errs.name = "Please enter your name";
+    if (!/^\S+@\S+\.\S+$/.test(form.reply_to)) errs.email = "Enter a valid email";
     if (form.message.trim().length < 10) errs.message = "Message should be at least 10 characters";
     setErrors(errs);
-    if (Object.keys(errs).length === 0) {
-      setSent(true);
-      setForm({ name: "", email: "", message: "" });
-      setTimeout(() => setSent(false), 4000);
+    if (Object.keys(errs).length > 0) return;
+
+    setStatus("loading");
+    try {
+      await emailjs.send("service_xom8nkp", "template_5lvmcb5", {
+        from_name: form.from_name,
+        reply_to: form.reply_to,
+        message: form.message,
+      });
+      setStatus("success");
+      setForm({ from_name: "", reply_to: "", message: "" });
+      setTimeout(() => setStatus("idle"), 5000);
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 5000);
     }
   };
 
@@ -699,17 +715,20 @@ function Contact() {
           <form onSubmit={submit} className="lg:col-span-3 glass rounded-3xl p-7 space-y-4">
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Your name" error={errors.name}>
-                <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full bg-transparent rounded-xl border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary transition" placeholder="John Doe" />
+                <input name="from_name" value={form.from_name} onChange={(e) => setForm({ ...form, from_name: e.target.value })} className="w-full bg-transparent rounded-xl border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary transition" placeholder="John Doe" />
               </Field>
               <Field label="Email" error={errors.email}>
-                <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full bg-transparent rounded-xl border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary transition" placeholder="you@example.com" />
+                <input name="reply_to" type="email" value={form.reply_to} onChange={(e) => setForm({ ...form, reply_to: e.target.value })} className="w-full bg-transparent rounded-xl border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary transition" placeholder="you@example.com" />
               </Field>
             </div>
             <Field label="Message" error={errors.message}>
-              <textarea rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="w-full bg-transparent rounded-xl border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary transition resize-none" placeholder="Tell me about your project..." />
+              <textarea name="message" rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="w-full bg-transparent rounded-xl border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary transition resize-none" placeholder="Tell me about your project..." />
             </Field>
-            <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:opacity-90 transition glow">
-              {sent ? (<><CheckCircle2 className="h-4 w-4" /> Message sent!</>) : (<><Send className="h-4 w-4" /> Send Message</>)}
+            <button type="submit" disabled={status === "loading"} className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:opacity-90 transition glow disabled:opacity-60">
+              {status === "loading" ? (<><Loader2 className="h-4 w-4 animate-spin" /> Sending...</>) :
+               status === "success" ? (<><CheckCircle2 className="h-4 w-4" /> Message sent!</>) :
+               status === "error" ? (<>Failed — try again</>) :
+               (<><Send className="h-4 w-4" /> Send Message</>)}
             </button>
           </form>
         </div>
