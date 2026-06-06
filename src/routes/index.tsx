@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, useMemo } from "react";
+import emailjs from "@emailjs/browser";
 import {
   Github, Linkedin, Facebook, Instagram, Mail, Phone, ArrowRight, ArrowUpRight,
   Code2, Palette, Layout, Layers, Database, Wrench, GraduationCap,
-  Sun, Moon, Menu, X, Sparkles, CheckCircle2, Send,
+  Sun, Moon, Menu, X, Sparkles, CheckCircle2, Send, Loader2,
 } from "lucide-react";
 import profileAsset from "@/assets/profile.png.asset.json";
 const profileImg = profileAsset.url;
