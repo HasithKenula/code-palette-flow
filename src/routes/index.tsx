@@ -645,21 +645,36 @@ function Experience() {
 }
 
 function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({ from_name: "", reply_to: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const submit = (e: React.FormEvent) => {
+  useEffect(() => {
+    emailjs.init("EDcyXeixPsTfW1UWW");
+  }, []);
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errs: Record<string, string> = {};
-    if (!form.name.trim()) errs.name = "Please enter your name";
-    if (!/^\S+@\S+\.\S+$/.test(form.email)) errs.email = "Enter a valid email";
+    if (!form.from_name.trim()) errs.name = "Please enter your name";
+    if (!/^\S+@\S+\.\S+$/.test(form.reply_to)) errs.email = "Enter a valid email";
     if (form.message.trim().length < 10) errs.message = "Message should be at least 10 characters";
     setErrors(errs);
-    if (Object.keys(errs).length === 0) {
-      setSent(true);
-      setForm({ name: "", email: "", message: "" });
-      setTimeout(() => setSent(false), 4000);
+    if (Object.keys(errs).length > 0) return;
+
+    setStatus("loading");
+    try {
+      await emailjs.send("service_xom8nkp", "template_5lvmcb5", {
+        from_name: form.from_name,
+        reply_to: form.reply_to,
+        message: form.message,
+      });
+      setStatus("success");
+      setForm({ from_name: "", reply_to: "", message: "" });
+      setTimeout(() => setStatus("idle"), 5000);
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 5000);
     }
   };
 
