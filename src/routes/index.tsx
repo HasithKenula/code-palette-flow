@@ -39,8 +39,99 @@ export const Route = createFileRoute("/")({
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" },
     ],
   }),
-  component: Portfolio,
+  component: StaticLanding,
 });
+
+function StaticLanding() {
+  return (
+    <main className="min-h-screen bg-background text-foreground">
+      <div className="mx-auto flex min-h-screen max-w-6xl flex-col justify-center gap-10 px-6 py-16 lg:px-8">
+        <nav className="flex flex-wrap items-center justify-between gap-4 rounded-full border border-border bg-card/80 px-5 py-3 shadow-lg backdrop-blur">
+          <a href="#top" className="font-display text-sm font-bold tracking-[0.25em] uppercase text-primary">
+            Hasith Kenula
+          </a>
+          <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+            <a href="#about" className="hover:text-foreground">About</a>
+            <a href="#skills" className="hover:text-foreground">Skills</a>
+            <a href="#contact" className="hover:text-foreground">Contact</a>
+          </div>
+        </nav>
+
+        <section id="top" className="grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+          <div>
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-primary">
+              Software Engineer & UI/UX Designer
+            </p>
+            <h1 className="font-display text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+              Building clean, modern web experiences.
+            </h1>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
+              I design and develop thoughtful interfaces, fast frontends, and practical full-stack
+              solutions for real users.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="#contact" className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground">
+                Contact Me
+              </a>
+              <a href="#projects" className="rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold">
+                View Projects
+              </a>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-border bg-card p-4 shadow-2xl">
+            <div className="rounded-[1.5rem] bg-gradient-to-br from-primary/25 via-card to-secondary p-8">
+              <div className="flex aspect-square items-center justify-center rounded-[1.5rem] border border-white/10 bg-background/70">
+                <div className="text-center">
+                  <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-primary text-3xl font-bold text-primary-foreground shadow-lg">
+                    HK
+                  </div>
+                  <h2 className="font-display text-2xl font-semibold">Hasith Kenula</h2>
+                  <p className="mt-2 text-sm text-muted-foreground">Portfolio landing page</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="about" className="grid gap-6 rounded-[2rem] border border-border bg-card p-8 shadow-xl lg:grid-cols-3">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-primary">About</p>
+            <h2 className="mt-3 font-display text-3xl font-bold">HTML-first homepage</h2>
+          </div>
+          <p className="lg:col-span-2 text-muted-foreground leading-7">
+            This site now uses a simple static landing page structure so GitHub Pages can serve it
+            directly from an `index.html` file. The React route mirrors the same content for local
+            development.
+          </p>
+        </section>
+
+        <section id="skills" className="grid gap-4 md:grid-cols-3">
+          {[
+            ["Frontend", "React, TypeScript, Tailwind"],
+            ["Backend", "Node.js, APIs, TanStack Start"],
+            ["Design", "UI systems, responsive layouts"],
+          ].map(([title, desc]) => (
+            <div key={title} className="rounded-[1.5rem] border border-border bg-card p-6">
+              <h3 className="font-display text-xl font-semibold">{title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{desc}</p>
+            </div>
+          ))}
+        </section>
+
+        <section id="contact" className="rounded-[2rem] bg-primary px-8 py-10 text-primary-foreground shadow-2xl">
+          <h2 className="font-display text-3xl font-bold">Want to collaborate?</h2>
+          <p className="mt-3 max-w-2xl text-primary-foreground/80">
+            Reach out and I can help with a landing page, portfolio, or frontend rebuild.
+          </p>
+          <a href="mailto:hello@example.com" className="mt-6 inline-flex rounded-full bg-background px-6 py-3 text-sm font-semibold text-foreground">
+            Send email
+          </a>
+        </section>
+      </div>
+    </main>
+  );
+}
 
 const NAV = [
   { label: "About", href: "#about" },
