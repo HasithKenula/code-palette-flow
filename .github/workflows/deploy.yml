@@ -74,7 +74,6 @@ jobs:
           else
             sed -i "s|%JS_PLACEHOLDER%||" dist/index.html
           fi
-
       - name: Configure Pages
         uses: actions/configure-pages@v3
 
