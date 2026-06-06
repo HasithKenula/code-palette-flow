@@ -715,17 +715,20 @@ function Contact() {
           <form onSubmit={submit} className="lg:col-span-3 glass rounded-3xl p-7 space-y-4">
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Your name" error={errors.name}>
-                <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full bg-transparent rounded-xl border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary transition" placeholder="John Doe" />
+                <input name="from_name" value={form.from_name} onChange={(e) => setForm({ ...form, from_name: e.target.value })} className="w-full bg-transparent rounded-xl border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary transition" placeholder="John Doe" />
               </Field>
               <Field label="Email" error={errors.email}>
-                <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full bg-transparent rounded-xl border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary transition" placeholder="you@example.com" />
+                <input name="reply_to" type="email" value={form.reply_to} onChange={(e) => setForm({ ...form, reply_to: e.target.value })} className="w-full bg-transparent rounded-xl border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary transition" placeholder="you@example.com" />
               </Field>
             </div>
             <Field label="Message" error={errors.message}>
-              <textarea rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="w-full bg-transparent rounded-xl border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary transition resize-none" placeholder="Tell me about your project..." />
+              <textarea name="message" rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="w-full bg-transparent rounded-xl border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary transition resize-none" placeholder="Tell me about your project..." />
             </Field>
-            <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:opacity-90 transition glow">
-              {sent ? (<><CheckCircle2 className="h-4 w-4" /> Message sent!</>) : (<><Send className="h-4 w-4" /> Send Message</>)}
+            <button type="submit" disabled={status === "loading"} className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:opacity-90 transition glow disabled:opacity-60">
+              {status === "loading" ? (<><Loader2 className="h-4 w-4 animate-spin" /> Sending...</>) :
+               status === "success" ? (<><CheckCircle2 className="h-4 w-4" /> Message sent!</>) :
+               status === "error" ? (<>Failed — try again</>) :
+               (<><Send className="h-4 w-4" /> Send Message</>)}
             </button>
           </form>
         </div>
