@@ -7,7 +7,20 @@ import {
   Sun, Moon, Menu, X, Sparkles, CheckCircle2, Send, Loader2,
 } from "lucide-react";
 import profileAsset from "@/assets/profile.png.asset.json";
-const profileImg = profileAsset.url;
+const profileImg = (() => {
+  // Prefer the project's asset URL when available (deployed asset pipeline).
+  if (profileAsset && profileAsset.url) return profileAsset.url;
+  // Prefer a shipped static asset in `public/` so it's included in the repo and Pages build.
+  // This file is added at `public/profile.svg` by the CI patch.
+  if (typeof window !== "undefined") {
+    // runtime can't check file existence reliably here; we still return the path
+    // and the browser will request it. We included `public/profile.svg` in the repo.
+    return "/profile.svg";
+  }
+  // Fallback: inline SVG avatar as data URL so the image always renders.
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='1.5'><rect width='100%' height='100%' rx='8' fill='%23f3f4f6'/><circle cx='12' cy='9' r='3' fill='%23c7d2fe'/><path d='M4 20c0-4 4-6 8-6s8 2 8 6' stroke='%238b5cf6' stroke-linecap='round' stroke-linejoin='round'/></svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+})();
 
 export const Route = createFileRoute("/")({
   head: () => ({
