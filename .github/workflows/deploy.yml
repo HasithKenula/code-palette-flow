@@ -2,11 +2,30 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20
 
       - name: Install dependencies
         run: npm ci
@@ -14,58 +33,23 @@ on:
       - name: Build
         run: npm run build
 
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-          if [ -d dist/client/assets ]; then
-            mkdir -p dist/assets
-            cp -r dist/client/assets/* dist/assets/
-          fi
-
-          CSS_FILE=$(find dist/assets -maxdepth 1 -name '*.css' | head -n 1 | xargs -r basename)
-          JS_FILE=$(find dist/assets -maxdepth 1 -name 'index-*.js' | sort | tail -n 1 | xargs -r basename)
-
-          cat > dist/index.html <<HTML
-          <!doctype html>
-          <html lang="en">
-            <head>
-              <meta charset="UTF-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <meta name="description" content="Hasith Kenula - Software Engineer & UI/UX Designer" />
-              <title>Hasith Kenula</title>
-              ${CSS_FILE:+<link rel="stylesheet" href="./assets/$CSS_FILE" />}
-            </head>
-            <body>
-              <div id="root"></div>
-              ${JS_FILE:+<script type="module" src="./assets/$JS_FILE"></script>}
-            </body>
-          </html>
-          HTML
-
-          if [ -d public ]; then
-            cp -r public/* dist/ 2>/dev/null || true
-          fi
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Prepare Pages artifact
-        shell: bash
-        run: |
-          mkdir -p dist
-          cp index.html dist/index.html
-          if [ -d public ]; then
-            cp -r public/* dist/ 2>/dev/null || true
-          fi
       - name: Configure Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v5
 
-      - name: Upload artifact
+      - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
