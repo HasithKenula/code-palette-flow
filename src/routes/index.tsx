@@ -438,37 +438,38 @@ function Education() {
 
 function Skills() {
   const groups = [
-    { icon: Code2, title: "Programming", items: [["Java", 88], ["JavaScript", 85], ["C++", 75], ["Kotlin", 70]] as [string, number][] },
-    { icon: Layout, title: "Web Development", items: [["React", 88], ["Node.js / Express", 82], ["HTML / CSS", 92], ["REST APIs", 85]] as [string, number][] },
-    { icon: Database, title: "Databases", items: [["MongoDB", 82], ["MySQL", 85]] as [string, number][] },
-    { icon: Palette, title: "UI/UX Design", items: [["Figma", 88], ["Wireframing", 85], ["Prototyping", 82]] as [string, number][] },
-    { icon: Wrench, title: "Tools", items: [["Git / GitHub", 90], ["VS Code", 95], ["Android Studio", 75]] as [string, number][] },
-    { icon: Layers, title: "Other", items: [["Software Engineering", 85], ["Agile", 80], ["Problem Solving", 90]] as [string, number][] },
+    { icon: Code2, title: "Programming", items: ["Java", "JavaScript", "TypeScript", "C++", "Kotlin"] },
+    { icon: Layout, title: "Web Development", items: ["React", "Node.js", "Express", "HTML5", "CSS3", "Tailwind", "REST APIs"] },
+    { icon: Database, title: "Databases", items: ["MongoDB", "MySQL", "Firebase"] },
+    { icon: Palette, title: "UI / UX Design", items: ["Figma", "Wireframing", "Prototyping", "Design Systems"] },
+    { icon: Wrench, title: "Tools & Workflow", items: ["Git & GitHub", "VS Code", "Android Studio", "Postman"] },
+    { icon: Layers, title: "Core Strengths", items: ["Software Engineering", "Agile / Scrum", "Problem Solving", "Team Collaboration"] },
   ];
   return (
     <section id="skills" className="py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeader eyebrow="Skills" title="Tools I work with" sub="A snapshot of the technologies I use to design, build and ship modern products." />
+        <SectionHeader
+          eyebrow="Skills"
+          title="A quick summary of what I work with"
+          sub="From writing clean code to designing intuitive interfaces — here's a snapshot of my technical toolkit."
+        />
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {groups.map((g) => (
             <div key={g.title} className="glass rounded-3xl p-6 hover:border-primary/60 transition-colors group">
-              <div className="flex items-center gap-3 mb-5">
+              <div className="flex items-center gap-3 mb-4">
                 <div className="h-10 w-10 rounded-xl bg-primary/15 text-primary grid place-items-center group-hover:bg-primary group-hover:text-primary-foreground transition">
                   <g.icon className="h-5 w-5" />
                 </div>
                 <h3 className="font-display font-semibold">{g.title}</h3>
               </div>
-              <div className="space-y-3">
-                {g.items.map(([name, val]) => (
-                  <div key={name}>
-                    <div className="flex justify-between text-xs mb-1.5">
-                      <span>{name}</span>
-                      <span className="text-muted-foreground">{val}%</span>
-                    </div>
-                    <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
-                      <div className="h-full rounded-full bg-primary transition-all duration-700" style={{ width: `${val}%` }} />
-                    </div>
-                  </div>
+              <div className="flex flex-wrap gap-2">
+                {g.items.map((name) => (
+                  <span
+                    key={name}
+                    className="text-xs px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground border border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition"
+                  >
+                    {name}
+                  </span>
                 ))}
               </div>
             </div>
@@ -481,24 +482,40 @@ function Skills() {
 
 function Services() {
   const services = [
-    { icon: Layers, title: "Full-Stack Web Development", desc: "End-to-end web apps with React, Node, Express, MongoDB / MySQL — built with clean architecture and REST APIs." },
-    { icon: Layout, title: "Frontend Development", desc: "Fast, accessible, responsive interfaces using React and modern CSS — polished interactions and animations." },
-    { icon: Palette, title: "UI / UX Design", desc: "Research-driven product design in Figma — wireframes, prototypes and design systems." },
-    { icon: Code2, title: "Responsive Website Design", desc: "Mobile-first marketing sites and landing pages that look stunning on every screen." },
+    { icon: Layers, image: serviceFullstack, title: "Full-Stack Web Development", desc: "End-to-end web apps with React, Node, Express, MongoDB / MySQL — built with clean architecture and REST APIs." },
+    { icon: Layout, image: serviceFrontend, title: "Frontend Development", desc: "Fast, accessible, responsive interfaces using React and modern CSS — polished interactions and animations." },
+    { icon: Palette, image: serviceUiux, title: "UI / UX Design", desc: "Research-driven product design in Figma — wireframes, prototypes and design systems." },
+    { icon: Code2, image: serviceResponsive, title: "Responsive Website Design", desc: "Mobile-first marketing sites and landing pages that look stunning on every screen." },
   ];
   return (
     <section id="services" className="py-20 sm:py-28 bg-secondary/30">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader eyebrow="Services" title="What I can do for you" />
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {services.map((s, i) => (
-            <div key={s.title} className={`relative glass rounded-3xl p-6 group hover:-translate-y-1 transition-all overflow-hidden ${i === 1 ? "bg-primary text-primary-foreground" : ""}`}>
-              <div className={`h-12 w-12 rounded-2xl grid place-items-center mb-5 ${i === 1 ? "bg-background/20 text-primary-foreground" : "bg-primary/15 text-primary"}`}>
-                <s.icon className="h-6 w-6" />
+          {services.map((s) => (
+            <div
+              key={s.title}
+              className="relative glass rounded-3xl overflow-hidden group hover:-translate-y-1 transition-all flex flex-col"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden bg-secondary">
+                <img
+                  src={s.image}
+                  alt={s.title}
+                  loading="lazy"
+                  width={1024}
+                  height={1024}
+                  className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-card/10 to-transparent" />
+                <div className="absolute top-4 left-4 h-10 w-10 rounded-xl grid place-items-center bg-card/90 backdrop-blur text-primary border border-border">
+                  <s.icon className="h-5 w-5" />
+                </div>
               </div>
-              <h3 className="font-display text-lg font-semibold mb-2">{s.title}</h3>
-              <p className={`text-sm ${i === 1 ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{s.desc}</p>
-              <ArrowUpRight className="absolute top-5 right-5 h-5 w-5 opacity-40 group-hover:opacity-100 group-hover:rotate-12 transition" />
+              <div className="p-6 flex-1 flex flex-col">
+                <h3 className="font-display text-lg font-semibold mb-2">{s.title}</h3>
+                <p className="text-sm text-muted-foreground">{s.desc}</p>
+                <ArrowUpRight className="mt-4 h-5 w-5 text-primary opacity-60 group-hover:opacity-100 group-hover:rotate-12 transition" />
+              </div>
             </div>
           ))}
         </div>
