@@ -77,18 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
+      { title: "Hasith Kenula" },
       { name: "description", content: "A professional, responsive portfolio website showcasing software engineering, web development, and UI/UX design skills." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
+      { property: "og:title", content: "Hasith Kenula" },
       { property: "og:description", content: "A professional, responsive portfolio website showcasing software engineering, web development, and UI/UX design skills." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Lovable App" },
+      { name: "twitter:title", content: "Hasith Kenula" },
       { name: "twitter:description", content: "A professional, responsive portfolio website showcasing software engineering, web development, and UI/UX design skills." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/577cc3ec-b682-4550-94c5-7edd69905be9/id-preview-8d065eca--0935dcd9-20a4-4a36-978b-ead40f6adc53.lovable.app-1780759064918.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/577cc3ec-b682-4550-94c5-7edd69905be9/id-preview-8d065eca--0935dcd9-20a4-4a36-978b-ead40f6adc53.lovable.app-1780759064918.png" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/8b122760-090e-4794-aa65-d83a97a66203" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/8b122760-090e-4794-aa65-d83a97a66203" },
     ],
     links: [
       {
