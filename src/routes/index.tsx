@@ -78,7 +78,7 @@ function useTypewriter(words: string[]) {
 }
 
 function Portfolio() {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
   const [menuOpen, setMenuOpen] = useState(false);
   const [filter, setFilter] = useState<string>("All");
   const role = useTypewriter(ROLES);
