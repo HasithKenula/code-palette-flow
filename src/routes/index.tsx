@@ -7,6 +7,10 @@ import {
   Sun, Moon, Menu, X, Sparkles, CheckCircle2, Send, Loader2,
 } from "lucide-react";
 import profileAsset from "@/assets/profile.png.asset.json";
+import serviceFullstack from "@/assets/service-fullstack.jpg";
+import serviceFrontend from "@/assets/service-frontend.jpg";
+import serviceUiux from "@/assets/service-uiux.jpg";
+import serviceResponsive from "@/assets/service-responsive.jpg";
 const profileImg = (() => {
   // Prefer the project's asset URL when available (deployed asset pipeline).
   if (profileAsset && profileAsset.url) return profileAsset.url;
